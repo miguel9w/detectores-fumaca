@@ -33,7 +33,7 @@ export const REVISTA_TOKENS = {
 export const SLIDE_CONFIG = {
   title: "Detectores de Fumaça e a Descoberta do Núcleo Atômico",
   theme: "átomo de Hélio",
-  presenter: "Estudante",
-  turma: "Química Geral",
+  presenter: "Miguel Pandini Bett",
+  turma: "1 ano ensino médio",
   revista: REVISTA_TOKENS,
 };

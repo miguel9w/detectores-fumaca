@@ -158,8 +158,8 @@ const App = () => {
             <div className="rounded-2xl border-2 border-[#c9a227]/20 bg-white p-8 shadow-sm text-center">
               <p className="revista-kicker mb-4">Trabalho Acadêmico — Química Geral</p>
               <div className="h-px bg-gradient-to-r from-transparent via-[#c9a227]/30 to-transparent mb-6" />
-              <p className="font-display text-2xl font-bold text-[#0e4a7a]">Estudante</p>
-              <p className="text-sm text-[#1a2a3a]/60 mt-1">Turma: Química Geral</p>
+              <p className="font-display text-2xl font-bold text-[#0e4a7a]">Miguel Pandini Bett</p>
+              <p className="text-sm text-[#1a2a3a]/60 mt-1">1 ano ensino médio</p>
               <p className="text-sm text-[#1a2a3a]/60">Disciplina: Química Geral • Professor(a)</p>
               <p className="text-xs text-[#1a2a3a]/40 mt-2">2026 • Detectores de Fumaça e o Núcleo Atômico</p>
               <div className="mt-6 flex justify-center gap-2">
