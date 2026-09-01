@@ -1,0 +1,5 @@
+node_modules/
+dist/
+*.tgz
+.continue-here.md
+.planning/debug/
