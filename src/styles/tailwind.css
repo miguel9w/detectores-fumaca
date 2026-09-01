@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+@theme {
+  --color-revista-bg: #fefcf8;
+  --color-revista-blue: #0e4a7a;
+  --color-revista-gold: #c9a227;
+  --color-revista-ink: #1a2a3a;
+  --font-display: "Fraunces", "DM Serif Display", serif;
+  --font-body: "Inter", "DM Sans", sans-serif;
+}
+
+@layer base {
+  body {
+    background-color: #fefcf8;
+    color: #1a2a3a;
+    font-family: var(--font-body);
+  }
+}
+
+@layer components {
+  .revista-slide {
+    background: #fefcf8;
+    color: #1a2a3a;
+  }
+  .revista-kicker {
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #c9a227;
+  }
+  .revista-title {
+    font-family: var(--font-display);
+    color: #0e4a7a;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+  .revista-rule {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #c9a227, transparent);
+    border: none;
+  }
+}
