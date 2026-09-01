@@ -20,7 +20,6 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
-      input: "./src/index.jsx",
       external: ["react-native", "expo-gl", "expo-asset"],
     },
   },
