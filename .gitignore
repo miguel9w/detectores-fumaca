@@ -3,3 +3,4 @@ dist/
 *.tgz
 .continue-here.md
 .planning/debug/
+test-results/
