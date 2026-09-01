@@ -6,36 +6,7 @@ import { SimulationsIntegration } from "./SimulationsIntegration";
 
 const App = () => {
   return (
-    <Deck
-      theme={{
-        backgroundColor: "#ffffff",
-        textColor: "#333333",
-        headerColor: "#333333",
-        footerColor: "#666666",
-        logo: null,
-        battery: false,
-      }}
-      transition={{
-        name: "default",
-        duration: "0.5s",
-        transition: "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-      }}
-      plugins={[]}
-      knobs={{
-        automaticSlides: false,
-        keyboard: true,
-        touch: true,
-        width: 1920,
-        height: 1080,
-        margin: 0.1,
-        minSlideWidth: 200,
-        maxSlideWidth: 2000,
-        presentationHeadroom: 0.1,
-        presentationFootroom: 0.1,
-        headroom: 0.1,
-        footroom: 0.1,
-      }}
-    >
+    <Deck>
       <Slide title="Detectores de Fumaça e a Descoberta do Núcleo Atômico">
         <h1>Detectores de Fumaça e a Descoberta do Núcleo Atômico</h1>
       </Slide>

@@ -42,7 +42,7 @@ const SimulationsIntegration = () => {
 
   if (!webglAvailable) {
     return (
-      <div className="no-webgl-fallback">
+      <div className="no-webgl-fallback" style={{ padding: "2rem", textAlign: "center" }}>
         <h2>Visualizações Atômicas</h2>
         <p>
           Simulações 3D e 2D requerem suporte a WebGL. Este conteúdo será
@@ -53,15 +53,15 @@ const SimulationsIntegration = () => {
   }
 
   if (!mounted) {
-    return <div ref={ref} style={{ height: 400 }} />;
+    return <div ref={ref} style={{ height: 400, display: "flex" }} />;
   }
 
   return (
     <div ref={ref} style={{ display: "flex", height: 400, gap: "1rem" }}>
-      <div style={{ flex: 1, pointerEvents: "none", position: "relative", minWidth: 0 }}>
+      <div style={{ flex: 1, position: "relative", minWidth: 0, height: "100%" }}>
         <AtomicStructure3D />
       </div>
-      <div style={{ flex: 1, pointerEvents: "none", position: "relative", minWidth: 0 }}>
+      <div style={{ flex: 1, position: "relative", minWidth: 0, height: "100%" }}>
         <ParticleSimulation2D />
       </div>
     </div>

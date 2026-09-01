@@ -1,11 +1,11 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useCallback } from "react";
 import Matter from "matter-js";
 
 export const ParticleSimulation2D = () => {
   const canvasRef = useRef(null);
   const engineRef = useRef(null);
   const animRef = useRef(null);
-  const resizeRef = useRef(null);
+  const dimensionsRef = useRef({ width: 400, height: 400 });
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -14,8 +14,11 @@ export const ParticleSimulation2D = () => {
     if (!ctx) return;
 
     const container = canvas.parentElement;
-    const W = container?.clientWidth || 400;
-    const H = container?.clientHeight || 400;
+    if (!container) return;
+
+    const W = container.clientWidth || 400;
+    const H = container.clientHeight || 400;
+    dimensionsRef.current = { width: W, height: H };
     canvas.width = W;
     canvas.height = H;
 
@@ -50,20 +53,28 @@ export const ParticleSimulation2D = () => {
     Matter.Engine.run(engine);
     engineRef.current = engine;
 
+    let running = true;
+    let resizeHandler = null;
+
     const draw = () => {
+      if (!running) return;
       Matter.Engine.update(engine, 1000 / 60);
 
-      ctx.clearRect(0, 0, W, H);
+      const { width: w, height: h } = dimensionsRef.current;
+      const currentCanvas = canvasRef.current;
+      if (!currentCanvas || !ctx) return;
+
+      ctx.clearRect(0, 0, w, h);
       ctx.fillStyle = "#fafafa";
-      ctx.fillRect(0, 0, W, H);
+      ctx.fillRect(0, 0, w, h);
 
       ctx.strokeStyle = "#e0e0e0";
       ctx.lineWidth = 1;
-      for (let i = 0; i < W; i += 40) {
-        ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, H); ctx.stroke();
+      for (let i = 0; i < w; i += 40) {
+        ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, h); ctx.stroke();
       }
-      for (let i = 0; i < H; i += 40) {
-        ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(W, i); ctx.stroke();
+      for (let i = 0; i < h; i += 40) {
+        ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(w, i); ctx.stroke();
       }
 
       ctx.beginPath();
@@ -115,27 +126,29 @@ export const ParticleSimulation2D = () => {
 
     animRef.current = requestAnimationFrame(draw);
 
-    resizeRef.current = () => {
+    resizeHandler = () => {
       if (container) {
         const nw = container.clientWidth || 400;
         const nh = container.clientHeight || 400;
+        dimensionsRef.current = { width: nw, height: nh };
         canvas.width = nw;
         canvas.height = nh;
       }
     };
-    window.addEventListener("resize", resizeRef.current);
+    window.addEventListener("resize", resizeHandler);
 
     return () => {
-      window.removeEventListener("resize", resizeRef.current);
+      running = false;
+      window.removeEventListener("resize", resizeHandler);
       if (animRef.current) cancelAnimationFrame(animRef.current);
-      Matter.Engine.stop(engine);
+      if (engineRef.current) Matter.Engine.stop(engineRef.current);
     };
   }, []);
 
   return (
     <canvas
       ref={canvasRef}
-      style={{ width: "100%", height: "100%", pointerEvents: "none", display: "block" }}
+      style={{ width: "100%", height: "100%", display: "block" }}
     />
   );
 };
