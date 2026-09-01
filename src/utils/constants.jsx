@@ -23,9 +23,17 @@ export const CHEMICAL_INFO = {
   },
 };
 
+export const REVISTA_TOKENS = {
+  bg: "#fefcf8",
+  blue: "#0e4a7a",
+  gold: "#c9a227",
+  ink: "#1a2a3a",
+};
+
 export const SLIDE_CONFIG = {
   title: "Detectores de Fumaça e a Descoberta do Núcleo Atômico",
   theme: "átomo de Hélio",
   presenter: "Estudante",
   turma: "Química Geral",
+  revista: REVISTA_TOKENS,
 };
