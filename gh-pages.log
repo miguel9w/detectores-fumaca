@@ -1,0 +1,14 @@
+npm notice run detectores-fumaca@1.0.0 npx
+npm notice run 'gh-pages' -d dist
+Error: Failed to get remote.origin.url (task must either be run in a git repository with a configured origin remote or must be configured with the "repo" option).
+    at /home/miguel/git_repos/trabalho-quimica-ions/node_modules/gh-pages/lib/git.js:214:13
+
+--- D-12 avisa e nao bloqueia: orientacao ---
+gh-pages falhou — verifique: git remote -v, gh auth status, permissões do repo
+Motivo: remote.origin.url não configurado (sem git remote origin)
+Solução:
+  git remote add origin https://github.com/miguel/detectores-fumaca.git
+  npx gh-pages -d dist
+# Alternativa se repo não existe: gh repo create detectores-fumaca --public --source=. --remote=origin --push
+gh auth: miguel9w logado (token scopes: admin:public_key gist read:org repo) — push requer repo scope OK
+Fase não bloqueada per D-04/D-12 graceful degradation — build e E2E preservados, artefatos prontos para retry manual.
