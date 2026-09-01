@@ -53,6 +53,9 @@
 - [x] Configure package.json `homepage` field and Vite `base` path for GitHub Pages
 - [x] Add deploy script (`vite build && npx gh-pages -d dist`)
 - [x] Fix App.jsx import: `Spectacle` → `Deck` for Spectacle.js v10 compatibility
+- [x] Fix frontend rendering: downgrade React 19→18.3.1, add styled-components 6.5.3 for `styled.div` compatibility
+- [x] Fix ParticleSimulation2D.jsx: use refs for dimensions, fix animation loop, add resize handler
+- [x] Fix SimulationsIntegration.jsx: proper flex layout with explicit heights for Canvas rendering
 - [x] Build verified successfully (`npx vite build` produces dist/)
 
 **Remaining:**
