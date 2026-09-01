@@ -1,5 +1,37 @@
 import { useState } from "react";
 
+function HeliumDiagramSVG() {
+  return (
+    <svg
+      viewBox="0 0 200 120"
+      className="w-full h-full"
+      role="img"
+      aria-label="Diagrama He²⁺"
+    >
+      <circle cx="100" cy="60" r="18" fill="#c9a227" stroke="#0e4a7a" strokeWidth="2" />
+      <circle cx="93" cy="56" r="6" fill="#ff6b6b" />
+      <circle cx="107" cy="64" r="6" fill="#ff6b6b" />
+      <ellipse
+        cx="100"
+        cy="60"
+        rx="42"
+        ry="42"
+        fill="none"
+        stroke="#0e4a7a"
+        strokeWidth="0.8"
+        strokeDasharray="4 3"
+        opacity="0.25"
+      />
+      <text x="100" y="88" textAnchor="middle" fontSize="7" fill="#0e4a7a" fontWeight="700">
+        He²⁺ Z=2 +2
+      </text>
+      <text x="100" y="98" textAnchor="middle" fontSize="6" fill="#1a2a3a" opacity="0.6">
+        1s⁰ — sem elétrons
+      </text>
+    </svg>
+  );
+}
+
 export function Figure({ src, alt, caption, credit, aspect = "4/3", className = "", ...props }) {
   const [error, setError] = useState(false);
   const showFallback = !src || error;
@@ -11,12 +43,9 @@ export function Figure({ src, alt, caption, credit, aspect = "4/3", className = 
     >
       <div className="relative w-full overflow-hidden bg-[#fefcf8]" style={{ aspectRatio: aspect }}>
         {showFallback ? (
-          <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-[#0e4a7a]/10 via-[#fefcf8] to-[#c9a227]/15 p-6 text-center">
-            <div className="text-3xl mb-2 opacity-40">◈</div>
-            <p className="text-xs tracking-widest uppercase text-[#0e4a7a]/50 font-semibold">
-              Ilustração — He²⁺
-            </p>
-            <p className="text-[11px] text-[#1a2a3a]/40 mt-1 max-w-[28ch]">{alt || "Imagem ilustrativa"}</p>
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#fefcf8] p-4">
+            <HeliumDiagramSVG />
+            <p className="text-[11px] text-[#1a2a3a]/40 mt-1 max-w-[28ch] text-center">{alt || "Ilustração He²⁺"}</p>
           </div>
         ) : (
           <img
