@@ -34,19 +34,18 @@ const SimulationsIntegration = () => {
 
   return (
     <div className="sim-tabs w-full">
-      <div className="mb-4 text-center">
-        <span className="inline-block px-3 py-1 rounded-full bg-[#0e4a7a] text-white text-[10px] font-bold tracking-widest uppercase mb-2">
+      <div className="mb-2 text-center">
+        <span className="inline-block px-3 py-1 rounded-full bg-[#0e4a7a] text-white text-[10px] font-bold tracking-widest uppercase mb-1">
           Simulações Interativas
         </span>
-        <h3 className="font-display text-2xl text-[#0e4a7a] font-bold">Do Átomo ao Detector</h3>
-        <p className="text-sm text-[#1a2a3a]/60 mt-1 max-w-prose mx-auto">
-          Explore os dois modelos: estrutura atômica em 3D e a câmara de ionização em 2D. Ambas as
-          simulações permanecem ativas — alterne pelas abas.
+        <h3 className="font-display text-lg text-[#0e4a7a] font-bold">Do Átomo ao Detector</h3>
+        <p className="text-xs text-[#1a2a3a]/60 mt-1 max-w-prose mx-auto">
+          Explore os dois modelos: estrutura atômica em 3D e a câmara de ionização em 2D.
         </p>
       </div>
 
       <Tabs defaultValue="3d" className="w-full">
-        <div className="flex justify-center mb-4">
+        <div className="flex justify-center mb-2">
           <TabsList>
             <TabsTrigger value="3d">Visão 3D — Estrutura Atômica</TabsTrigger>
             <TabsTrigger value="2d">Visão 2D — Câmara de Ionização</TabsTrigger>
@@ -54,19 +53,19 @@ const SimulationsIntegration = () => {
         </div>
 
         <TabsContent value="3d">
-          <div className="h-[420px] bg-white rounded-xl border border-[#c9a227]/20 overflow-hidden">
+          <div className="h-[300px] bg-white rounded-xl border border-[#c9a227]/20 overflow-hidden">
             <AtomicStructure3D />
           </div>
-          <p className="text-xs text-center mt-2 text-[#1a2a3a]/60">
+          <p className="text-xs text-center mt-1 text-[#1a2a3a]/60">
             Modelo 3D interativo — arraste para orbitar, scroll para zoom
           </p>
         </TabsContent>
 
         <TabsContent value="2d">
-          <div className="h-[420px] bg-white rounded-xl border border-[#c9a227]/20 overflow-hidden flex flex-col">
+          <div className="h-[300px] bg-white rounded-xl border border-[#c9a227]/20 overflow-hidden flex flex-col">
             <ParticleSimulation2D />
           </div>
-          <p className="text-xs text-center mt-2 text-[#1a2a3a]/60">
+          <p className="text-xs text-center mt-1 text-[#1a2a3a]/60">
             Câmara de ionização — insira fumaça e observe a corrente cair
           </p>
         </TabsContent>

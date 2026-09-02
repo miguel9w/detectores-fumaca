@@ -84,7 +84,7 @@ test("no console errors and no critical warnings D-14", async ({ page }) => {
 
   await page.goto("/");
   await page.waitForTimeout(1500);
-  for (let i = 0; i < 8; i++) {
+  for (let i = 0; i < 10; i++) {
     await page.keyboard.press("ArrowRight");
     await page.waitForTimeout(350);
   }
@@ -101,7 +101,9 @@ test("no console errors and no critical warnings D-14", async ({ page }) => {
 
 test("auto-play total — both simulations animate without click D-02", async ({ page }) => {
   await page.goto("/");
-  for (let i = 0; i < 7; i++) {
+  for (let i = 0; i < 10; i++) {
+    const simHeading = page.locator('text=Visão 3D');
+    if (await simHeading.isVisible().catch(() => false)) break;
     await page.keyboard.press("ArrowRight");
     await page.waitForTimeout(400);
   }

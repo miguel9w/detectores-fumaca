@@ -41,7 +41,7 @@ export function Figure({ src, alt, caption, credit, aspect = "4/3", className = 
       className={`revista-figure rounded-xl overflow-hidden border border-[#c9a227]/20 shadow-sm bg-white ${className}`}
       {...props}
     >
-      <div className="relative w-full overflow-hidden bg-[#fefcf8]" style={{ aspectRatio: aspect }}>
+      <div className="relative w-full overflow-hidden bg-[#fefcf8] max-h-[200px]" style={{ aspectRatio: aspect }}>
         {showFallback ? (
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#fefcf8] p-4">
             <HeliumDiagramSVG />

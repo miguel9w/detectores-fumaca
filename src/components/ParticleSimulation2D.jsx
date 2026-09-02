@@ -10,9 +10,12 @@ export const ParticleSimulation2D = () => {
   const bodiesToRemoveRef = useRef([]);
   const [current, setCurrent] = useState(85);
   const [alphaOn, setAlphaOn] = useState(true);
+  const [alphaCount, setAlphaCount] = useState(0);
+  const [showDetails, setShowDetails] = useState(true);
   const spawnCountRef = useRef(0);
+  const alphaCountRef = useRef(0);
 
-  const MAX_BODIES = 30;
+  const MAX_BODIES = 34;
   const currentRef = useRef(current);
   useEffect(() => { currentRef.current = current; }, [current]);
 
@@ -116,6 +119,21 @@ export const ParticleSimulation2D = () => {
       });
       Matter.Body.setVelocity(alpha, { x: 1.5 + Math.random() * 1.2, y: (Math.random() - 0.5) * 0.6 });
       Matter.World.add(world, alpha);
+      alphaCountRef.current += 1;
+      setAlphaCount(alphaCountRef.current);
+      // ionização secundária: cada α gera trilha de pares ao longo do percurso
+      setTimeout(() => {
+        for (let k = 0; k < 2; k++) {
+          if (world.bodies.length > MAX_BODIES + 12) break;
+          const x = alpha.position.x + Math.random() * 24;
+          const y = alpha.position.y + (Math.random() - 0.5) * 18;
+          const ion = Matter.Bodies.circle(x, y, 4, { label: "ion", mass: 0.2, frictionAir: 0.03, restitution: 0.6 });
+          const el = Matter.Bodies.circle(x + 6, y, 2, { label: "electron2d", mass: 0.001, frictionAir: 0.05, restitution: 0.9 });
+          Matter.Body.setVelocity(ion, { x: -0.4 - Math.random() * 0.5, y: (Math.random() - 0.5) * 0.6 });
+          Matter.Body.setVelocity(el, { x: 0.6 + Math.random() * 0.6, y: (Math.random() - 0.5) * 1 });
+          Matter.World.add(world, [ion, el]);
+        }
+      }, 180);
     };
 
     // initial population
@@ -199,14 +217,35 @@ export const ParticleSimulation2D = () => {
       ctx.fillStyle = "rgba(201,162,39,0.04)";
       ctx.fillRect(chamberLeft, chamberTop, chamberW, chamberH);
 
-      // chamber label
+      // chamber label + física
       ctx.fillStyle = "#0e4a7a";
       ctx.font = "600 10px Inter, sans-serif";
       ctx.textAlign = "center";
-      ctx.fillText("CÂMARA DE IONIZAÇÃO", W / 2, chamberTop - 12);
-      ctx.font = "400 8px Inter, sans-serif";
+      ctx.fillText("CÂMARA DE IONIZAÇÃO — E ≈ 180 V/m", W / 2, chamberTop - 12);
+      ctx.font = "400 7px Inter, sans-serif";
       ctx.fillStyle = "rgba(26,42,58,0.6)";
-      ctx.fillText("Fonte α (²⁴¹Am)            Cátodo (−)            Ânodo (+)", W / 2, chamberTop - 24);
+      ctx.fillText("Fonte α (²⁴¹Am → ²³⁷Np + α 5.49 MeV)    W≈34 eV/par → ~1.5×10⁵ pares/α    Cátodo (−)  →  Ânodo (+)", W / 2, chamberTop - 24);
+      // campo elétrico: setas sutis
+      ctx.strokeStyle = "rgba(14,74,122,0.18)";
+      ctx.lineWidth = 0.8;
+      for (let fy = chamberTop + 28; fy < chamberBottom; fy += 32) {
+        for (let fx = chamberLeft + 36; fx < chamberRight - 30; fx += 48) {
+          ctx.beginPath();
+          ctx.moveTo(fx, fy);
+          ctx.lineTo(fx + 10, fy);
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.moveTo(fx + 10, fy);
+          ctx.lineTo(fx + 7, fy - 2);
+          ctx.moveTo(fx + 10, fy);
+          ctx.lineTo(fx + 7, fy + 2);
+          ctx.stroke();
+        }
+      }
+      ctx.fillStyle = "rgba(14,74,122,0.55)";
+      ctx.font = "600 6px Inter, sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText("E →", W / 2, chamberBottom + 10);
 
       // draw bodies
       world.bodies.forEach((body) => {
@@ -227,6 +266,12 @@ export const ParticleSimulation2D = () => {
           ctx.textAlign = "center";
           ctx.fillText("+", x, y);
         } else if (body.label === "source") {
+          // pulso de decaimento: brilho quando emite
+          const pulse = Math.sin(Date.now() * 0.008) * 0.3 + 0.7;
+          ctx.beginPath();
+          ctx.arc(x, y, 10 + pulse * 1.5, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(239,68,68,${0.15 + pulse * 0.1})`;
+          ctx.fill();
           ctx.beginPath();
           ctx.arc(x, y, 10, 0, Math.PI * 2);
           ctx.fillStyle = "#ef4444";
@@ -239,6 +284,9 @@ export const ParticleSimulation2D = () => {
           ctx.textAlign = "center";
           ctx.textBaseline = "middle";
           ctx.fillText("α", x, y);
+          ctx.font = "600 5px Inter, sans-serif";
+          ctx.fillStyle = "rgba(255,255,255,0.9)";
+          ctx.fillText("²⁴¹Am", x, y + 14);
         } else if (body.label === "ion") {
           ctx.beginPath();
           ctx.arc(x, y, 5, 0, Math.PI * 2);
@@ -253,6 +301,11 @@ export const ParticleSimulation2D = () => {
           ctx.fillStyle = "#0e4a7a";
           ctx.fill();
         } else if (body.label === "alpha") {
+          // rastro de ionização
+          ctx.beginPath();
+          ctx.arc(x, y, 6, 0, Math.PI * 2);
+          ctx.fillStyle = "rgba(239,68,68,0.12)";
+          ctx.fill();
           ctx.beginPath();
           ctx.arc(x, y, 4, 0, Math.PI * 2);
           ctx.fillStyle = "#ef4444";
@@ -260,6 +313,10 @@ export const ParticleSimulation2D = () => {
           ctx.strokeStyle = "#991b1b";
           ctx.lineWidth = 1;
           ctx.stroke();
+          ctx.fillStyle = "#7f1d1d";
+          ctx.font = "600 5px Inter, sans-serif";
+          ctx.textAlign = "center";
+          ctx.fillText("He²⁺", x, y - 7);
         } else if (body.label === "smoke") {
           ctx.beginPath();
           ctx.arc(x, y, 9, 0, Math.PI * 2);
@@ -338,6 +395,8 @@ export const ParticleSimulation2D = () => {
     Matter.World.remove(engine.world, toRemove);
     setCurrent(85);
     spawnCountRef.current = 0;
+    alphaCountRef.current = 0;
+    setAlphaCount(0);
     // respawn ions
     for (let i = 0; i < 6; i++) {
       const w = canvasRef.current?.width || 520;
@@ -360,30 +419,55 @@ export const ParticleSimulation2D = () => {
       <div className="flex flex-wrap items-center gap-2 px-3 py-2 border-b border-[#c9a227]/10 bg-[#fefcf8] shrink-0">
         <button
           onClick={() => spawnSmoke(12)}
-          className="rounded-full bg-[#0e4a7a] px-4 py-1.5 text-xs font-semibold text-white hover:bg-[#0e4a7a]/90 transition"
+          className="rounded-full bg-[#0e4a7a] px-3 py-1 text-xs font-semibold text-white hover:bg-[#0e4a7a]/90 transition"
         >
           Inserir Fumaça
         </button>
         <button
           onClick={handleReset}
-          className="rounded-full border border-[#c9a227]/30 bg-white px-4 py-1.5 text-xs font-semibold text-[#0e4a7a] hover:bg-[#fefcf8] transition"
+          className="rounded-full border border-[#c9a227]/30 bg-white px-3 py-1 text-xs font-semibold text-[#0e4a7a] hover:bg-[#fefcf8] transition"
         >
           Reset
         </button>
         <button
           onClick={() => setAlphaOn((v) => !v)}
-          className={`rounded-full px-4 py-1.5 text-xs font-semibold transition ${alphaOn ? "bg-[#c9a227] text-[#0e4a7a]" : "bg-white border border-[#c9a227]/30 text-[#1a2a3a]/60"}`}
+          className={`rounded-full px-3 py-1 text-xs font-semibold transition ${alphaOn ? "bg-[#c9a227] text-[#0e4a7a]" : "bg-white border border-[#c9a227]/30 text-[#1a2a3a]/60"}`}
         >
-          Alfa {alphaOn ? "ON" : "OFF"}
+          α {alphaOn ? "ON" : "OFF"}
+        </button>
+        <button
+          onClick={() => setShowDetails((v) => !v)}
+          className="rounded-full border border-[#0e4a7a]/20 bg-white px-3 py-1 text-xs font-medium text-[#0e4a7a] hover:bg-[#fefcf8] transition"
+        >
+          {showDetails ? "Detalhes ▲" : "Detalhes ▼"}
         </button>
         <div className="ml-auto flex items-center gap-2 text-xs">
           <span className="text-[#1a2a3a]/60 font-medium">Corrente:</span>
           <span className={`font-bold ${alarmOn ? "text-[#ef4444]" : "text-[#0e4a7a]"}`}>{current} µA</span>
           <span className={`rounded-full px-2 py-0.5 text-[10px] font-bold tracking-widest ${alarmOn ? "bg-[#ef4444] text-white animate-pulse" : "bg-emerald-100 text-emerald-700"}`}>
-            Alarme: {alarmOn ? "ON" : "OFF"}
+            {alarmOn ? "ALARME" : "OK"}
           </span>
         </div>
       </div>
+      {showDetails && (
+        <div className="grid grid-cols-3 gap-2 px-3 py-2 bg-[#0e4a7a] text-white text-[11px] leading-tight">
+          <div className="rounded bg-white/10 p-2 text-center">
+            <p className="opacity-70 text-[10px] tracking-widest uppercase">Fonte α</p>
+            <p className="font-mono font-bold mt-0.5">²⁴¹Am → ²³⁷Np + α</p>
+            <p className="opacity-80 mt-0.5">5.49 MeV • T½ 432 a • 0.9 µCi</p>
+          </div>
+          <div className="rounded bg-white/10 p-2 text-center">
+            <p className="opacity-70 text-[10px] tracking-widest uppercase">Ionização</p>
+            <p className="font-bold mt-0.5">W ≈ 34 eV/par em ar</p>
+            <p className="opacity-80 mt-0.5">~1.5×10⁵ pares por α • E/W</p>
+          </div>
+          <div className="rounded bg-[#c9a227] text-[#0e4a7a] p-2 text-center">
+            <p className="opacity-80 text-[10px] tracking-widest uppercase">Estatística</p>
+            <p className="font-bold mt-0.5">α emitidas: {alphaCount}</p>
+            <p className="text-[10px] mt-0.5">Alcance 4 cm • Blindado por carcaça</p>
+          </div>
+        </div>
+      )}
       <div className="relative flex-1 min-h-[260px]">
         <canvas
           ref={canvasRef}
