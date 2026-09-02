@@ -81,11 +81,11 @@ function Scene() {
         anchorY="middle"
         fontWeight={700}
       >
-        He²⁺
+        He
       </Text>
       <Html center position={[0, -1.15, 0]} style={{ pointerEvents: "none" }}>
         <span className="whitespace-nowrap text-[10px] text-[#1a2a3a]/60 text-center block max-w-[28ch] leading-tight">
-          Órbita 1s² → 1s⁰ (He²⁺ sem elétrons — modelo didático com elétrons para contraste)
+          Órbita 1s² → 1s⁰ (sem elétrons — modelo didático com elétrons para contraste)
         </span>
       </Html>
 
