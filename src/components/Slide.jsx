@@ -7,16 +7,6 @@ export const Slide = ({ title, kicker, children, ...props }) => {
         <div className="revista-content max-w-5xl mx-auto px-5 py-3 w-full flex-1 min-h-0 flex flex-col overflow-hidden">
           {title && (
             <header className="mb-3 shrink-0">
-              {kicker && (
-                <p className="revista-kicker mb-1 tracking-[0.2em] text-[#c9a227] uppercase text-xs font-semibold">
-                  {kicker}
-                </p>
-              )}
-              {!kicker && (
-                <span className="inline-block px-3 py-1 rounded-full bg-[#c9a227]/15 text-[#c9a227] text-[10px] font-bold tracking-widest uppercase mb-2">
-                  Revista Científica Ilustrada — He²⁺
-                </span>
-              )}
               <h2 className="revista-title font-display text-2xl md:text-3xl text-[#0e4a7a] leading-tight">
                 {title}
               </h2>

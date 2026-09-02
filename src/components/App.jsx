@@ -15,10 +15,9 @@ const App = () => {
       }}
     >
         {/* SLD-01 Título */}
-        <Slide title="Detectores de Fumaça e a Descoberta do Núcleo Atômico" kicker="Química Geral • Revista Científica Ilustrada">
+        <Slide title="Detectores de Fumaça e a Descoberta do Núcleo Atômico">
           <div className="space-y-3">
             <div className="text-center">
-              <p className="revista-kicker">Química Geral • Revista Científica Ilustrada</p>
               <h1 className="font-display text-2xl md:text-4xl font-black text-[#0e4a7a] leading-tight mt-1">
                 Detectores de Fumaça
                 <span className="block text-[#c9a227] text-xl md:text-2xl font-bold mt-1">
