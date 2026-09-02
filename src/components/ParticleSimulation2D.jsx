@@ -27,11 +27,21 @@ export const ParticleSimulation2D = () => {
     const container = canvas.parentElement;
     if (!container) return;
 
-    const W = container.clientWidth || 520;
-    const H = container.clientHeight || 380;
-    dimensionsRef.current = { width: W, height: H };
-    canvas.width = W;
-    canvas.height = H;
+    const setupCanvas = () => {
+      const W = container.clientWidth || 520;
+      const H = container.clientHeight || 380;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2.5);
+      dimensionsRef.current = { width: W, height: H, dpr };
+      canvas.width = Math.round(W * dpr);
+      canvas.height = Math.round(H * dpr);
+      canvas.style.width = `${W}px`;
+      canvas.style.height = `${H}px`;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = "high";
+      return { W, H, dpr };
+    };
+    const { W, H } = setupCanvas();
 
     const engine = Matter.Engine.create({
       enableSleeping: false,
@@ -199,10 +209,12 @@ export const ParticleSimulation2D = () => {
       ctx.clearRect(0, 0, w, h);
       ctx.fillStyle = "#fefcf8";
       ctx.fillRect(0, 0, w, h);
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
 
-      // grid subtle
+      // grid sutil — nitidez melhorada
       ctx.strokeStyle = "rgba(14,74,122,0.05)";
-      ctx.lineWidth = 1;
+      ctx.lineWidth = 0.8;
       for (let i = 0; i < w; i += 40) {
         ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, h); ctx.stroke();
       }
@@ -340,9 +352,15 @@ export const ParticleSimulation2D = () => {
         if (!container) return;
         const nw = container.clientWidth || 520;
         const nh = container.clientHeight || 380;
-        dimensionsRef.current = { width: nw, height: nh };
-        canvas.width = nw;
-        canvas.height = nh;
+        const dpr = Math.min(window.devicePixelRatio || 1, 2.5);
+        dimensionsRef.current = { width: nw, height: nh, dpr };
+        canvas.width = Math.round(nw * dpr);
+        canvas.height = Math.round(nh * dpr);
+        canvas.style.width = `${nw}px`;
+        canvas.style.height = `${nh}px`;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = "high";
       }, 150);
     };
     window.addEventListener("resize", resizeHandler);
@@ -363,9 +381,9 @@ export const ParticleSimulation2D = () => {
     const engine = engineRef.current;
     if (!engine) return;
     if (engine.world.bodies.filter((b) => b.label === "smoke").length >= MAX_BODIES) return;
-    const canvas = canvasRef.current;
-    const w = canvas?.width || 520;
-    const h = canvas?.height || 380;
+    const dims = dimensionsRef.current;
+    const w = dims.width || 520;
+    const h = dims.height || 380;
     const chamberLeft = 56;
     const chamberRight = w - 56;
     const chamberTop = 58;
@@ -399,8 +417,9 @@ export const ParticleSimulation2D = () => {
     setAlphaCount(0);
     // respawn ions
     for (let i = 0; i < 6; i++) {
-      const w = canvasRef.current?.width || 520;
-      const h = canvasRef.current?.height || 380;
+      const dims = dimensionsRef.current;
+      const w = dims.width || 520;
+      const h = dims.height || 380;
       const x = 80 + Math.random() * (w - 160);
       const y = 70 + Math.random() * (h - 100);
       const ion = Matter.Bodies.circle(x, y, 5, { label: "ion", mass: 0.2, frictionAir: 0.03 });
