@@ -1,3 +1,4 @@
+export const CACHE_BUMP = "2026-09-04-v2";
 export const ION_PROPERTIES = {
   symbol: "He²⁺",
   name: "Hélio duplamente ionizado",
