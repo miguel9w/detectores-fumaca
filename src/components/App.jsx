@@ -239,25 +239,6 @@ const App = () => {
           </div>
         </Slide>
 
-        {/* SLD-08 Autoria */}
-        <Slide title="Autoria">
-          <div className="max-w-lg mx-auto">
-            <div className="rounded-2xl border-2 border-[#c9a227]/20 bg-white p-8 shadow-sm text-center">
-              <p className="revista-kicker mb-4">Trabalho Acadêmico — Química Geral</p>
-              <div className="h-px bg-gradient-to-r from-transparent via-[#c9a227]/30 to-transparent mb-6" />
-              <p className="font-display text-2xl font-bold text-[#0e4a7a]">Miguel Pandini Bett v2</p>
-              <p className="text-sm text-[#1a2a3a]/60 mt-1">101 aluno</p>
-              <p className="text-sm text-[#1a2a3a]/60">Disciplina: Química Geral • Professor(a)</p>
-              <p className="text-xs text-[#1a2a3a]/40 mt-2">2026 • Detectores de Fumaça e o Núcleo Atômico</p>
-              <div className="mt-6 flex justify-center gap-2">
-                <span className="h-1 w-12 rounded-full bg-[#c9a227]/40" />
-                <span className="h-1 w-4 rounded-full bg-[#0e4a7a]/30" />
-                <span className="h-1 w-12 rounded-full bg-[#c9a227]/40" />
-              </div>
-            </div>
-          </div>
-        </Slide>
-
         {/* SLD-05/06 Simulações */}
         <Slide title="Simulações 3D e 2D">
           <p className="text-sm text-[#1a2a3a]/60 text-center mb-4 max-w-prose mx-auto">

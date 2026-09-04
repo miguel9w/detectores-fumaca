@@ -36,8 +36,7 @@ Este projeto transforma conceitos complexos de estrutura atômica e detectores d
 | SLD-06 | **Química Quântica: Por que He²⁺ existe?** — estrutura eletrônica, tunelamento |
 | SLD-07 | **Aplicações do He²⁺** — tecnologia, saúde, meio ambiente |
 | SLD-08 | **Simulações 3D e 2D** — estrutura atômica interativa + câmara de ionização |
-| SLD-09 | **Autoria** — Miguel Pandini Bett, 1º ano ensino médio |
-| SLD-10 | **Referências** — Rutherford, IAEA, NFPA, artigos acadêmicos |
+| SLD-09 | **Referências** — Rutherford, IAEA, NFPA, artigos acadêmicos |
 
 ---
 
