@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "homepage": "https://miguel.github.io/detectores-fumaca",
+  "homepage": "https://miguel9w.github.io/detectores-fumaca",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
