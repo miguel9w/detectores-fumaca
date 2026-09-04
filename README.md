@@ -187,7 +187,7 @@ detectores-fumaca/
 
 ## Autoria
 
-**Miguel Pandini Bett** — 1º ano do ensino médio
+**Miguel Pandini Bett** — 101 aluno
 
 Disciplina: Química Geral  
 Ano: 2026  
